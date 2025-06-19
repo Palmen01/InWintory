@@ -28,9 +28,8 @@ namespace server.Controllers
         }
 
         [HttpPost("items")]
-        public async Task<IActionResult> SeedItems([FromQuery] int count = 25, [FromQuery] bool force = false)
+        public async Task<IActionResult> SeedItems([FromQuery] int count = 25)
         {
-            // Validate count parameter
             if (count <= 0 || count > 1000)
             {
                 return BadRequest("Count must be between 1 and 1000");
@@ -38,36 +37,20 @@ namespace server.Controllers
 
             try
             {
-                // If force is true, clear existing data
-                if (force)
-                {
-                    _context.Items.RemoveRange(_context.Items);
-                    await _context.SaveChangesAsync();
-                    _logger.LogInformation("Cleared existing items from database");
-                }
-
-                // Check if Items already exist (unless force is used)
-                if (!force && await _context.Items.AnyAsync())
-                {
-                    return BadRequest("Items already exist in database. Use force=true to override.");
-                }
-
-                // Create all items in a single list - much more efficient
                 var items = new List<Item>();
 
                 for (int i = 0; i < count; i++)
                 {
                     items.Add(new Item
                     {
-                        Name = $"{Names[rnd.Next(Names.Length)]} #{i + 1}", // Add number to avoid duplicates
+                        Name = $"{Names[rnd.Next(Names.Length)]} #{i + 1}",
                         Quantity = rnd.Next(1, 100),
                         UnitsSold = rnd.Next(1, 100),
-                        UnitsLost = rnd.Next(0, 25), // 0 makes more sense as minimum
-                        ReorderThreshold = rnd.Next(5, 25), // Higher minimum threshold makes more sense
+                        UnitsLost = rnd.Next(0, 25),
+                        ReorderThreshold = rnd.Next(5, 25),
                     });
                 }
 
-                // Single database operation instead of multiple
                 await _context.Items.AddRangeAsync(items);
                 var savedCount = await _context.SaveChangesAsync();
 
@@ -88,66 +71,66 @@ namespace server.Controllers
             }
         }
 
-        [HttpPost("items/realistic")]
-        public async Task<IActionResult> SeedRealisticItems([FromQuery] int count = 25, [FromQuery] bool force = false)
-        {
-            if (count <= 0 || count > 1000)
-            {
-                return BadRequest("Count must be between 1 and 1000");
-            }
+        // [HttpPost("items/realistic")]
+        // public async Task<IActionResult> SeedRealisticItems([FromQuery] int count = 25, [FromQuery] bool force = false)
+        // {
+        //     if (count <= 0 || count > 1000)
+        //     {
+        //         return BadRequest("Count must be between 1 and 1000");
+        //     }
 
-            try
-            {
-                if (force)
-                {
-                    _context.Items.RemoveRange(_context.Items);
-                    await _context.SaveChangesAsync();
-                    _logger.LogInformation("Cleared existing items from database");
-                }
+        //     try
+        //     {
+        //         if (force)
+        //         {
+        //             _context.Items.RemoveRange(_context.Items);
+        //             await _context.SaveChangesAsync();
+        //             _logger.LogInformation("Cleared existing items from database");
+        //         }
 
-                if (!force && await _context.Items.AnyAsync())
-                {
-                    return BadRequest("Items already exist in database. Use force=true to override.");
-                }
+        //         if (!force && await _context.Items.AnyAsync())
+        //         {
+        //             return BadRequest("Items already exist in database. Use force=true to override.");
+        //         }
 
-                var items = new List<Item>();
+        //         var items = new List<Item>();
 
-                for (int i = 0; i < count; i++)
-                {
-                    var quantity = rnd.Next(1, 100);
-                    var unitsSold = rnd.Next(0, Math.Min(quantity, 50)); // Can't sell more than you have
-                    var unitsLost = rnd.Next(0, Math.Min(quantity - unitsSold, 10)); // Can't lose more than remaining
-                    var reorderThreshold = rnd.Next(5, 25);
+        //         for (int i = 0; i < count; i++)
+        //         {
+        //             var quantity = rnd.Next(1, 100);
+        //             var unitsSold = rnd.Next(0, Math.Min(quantity, 50)); // Can't sell more than you have
+        //             var unitsLost = rnd.Next(0, Math.Min(quantity - unitsSold, 10)); // Can't lose more than remaining
+        //             var reorderThreshold = rnd.Next(5, 25);
 
-                    items.Add(new Item
-                    {
-                        Name = $"{Names[rnd.Next(Names.Length)]} - Batch {i + 1}",
-                        Quantity = quantity,
-                        UnitsSold = unitsSold,
-                        UnitsLost = unitsLost,
-                        ReorderThreshold = reorderThreshold,
-                    });
-                }
+        //             items.Add(new Item
+        //             {
+        //                 Name = $"{Names[rnd.Next(Names.Length)]} - Batch {i + 1}",
+        //                 Quantity = quantity,
+        //                 UnitsSold = unitsSold,
+        //                 UnitsLost = unitsLost,
+        //                 ReorderThreshold = reorderThreshold,
+        //             });
+        //         }
 
-                await _context.Items.AddRangeAsync(items);
-                var savedCount = await _context.SaveChangesAsync();
+        //         await _context.Items.AddRangeAsync(items);
+        //         var savedCount = await _context.SaveChangesAsync();
 
-                _logger.LogInformation($"Successfully seeded {savedCount} realistic items to database");
+        //         _logger.LogInformation($"Successfully seeded {savedCount} realistic items to database");
 
-                return Ok(new
-                {
-                    Message = "Database seeded with realistic data successfully",
-                    ItemsCreated = savedCount,
-                    ItemsRequested = count,
-                    Timestamp = DateTime.UtcNow
-                });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while seeding database");
-                return StatusCode(500, new { Message = "Error occurred while seeding database", Error = ex.Message });
-            }
-        }
+        //         return Ok(new
+        //         {
+        //             Message = "Database seeded with realistic data successfully",
+        //             ItemsCreated = savedCount,
+        //             ItemsRequested = count,
+        //             Timestamp = DateTime.UtcNow
+        //         });
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.LogError(ex, "Error occurred while seeding database");
+        //         return StatusCode(500, new { Message = "Error occurred while seeding database", Error = ex.Message });
+        //     }
+        // }
 
         [HttpGet("status")]
         public async Task<IActionResult> GetSeedStatus()
