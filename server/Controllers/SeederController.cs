@@ -7,29 +7,41 @@ namespace server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SeedController : ControllerBase
+    public class SeederController : ControllerBase
     {
         private readonly InventoryDbContext _context;
-        private readonly ILogger<SeedController> _logger;
+        private readonly ILogger<SeederController> _logger;
 
-        private static readonly Random rnd = new Random();
-
-        public SeedController(InventoryDbContext context, ILogger<SeedController> logger)
+        public SeederController(InventoryDbContext context, ILogger<SeederController> logger)
         {
             _context = context;
             _logger = logger;
         }
 
         [HttpPost("items")]
-        public async Task<IActionResult> SeedItems([FromQuery] int count = 25)
+        public async Task<IActionResult> SeedItems([FromQuery] int count = 25, [FromQuery] bool force = false)
         {
             if (count <= 0 || count > 1000)
             {
                 return BadRequest("Count must be between 1 and 1000");
             }
 
+            if (force)
+            {
+                _context.Items.RemoveRange(_context.Items);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Cleared existing items from database");
+            }
+
+            // Check if Items already exist (unless force is used)
+            if (!force && await _context.Items.AnyAsync())
+            {
+                return BadRequest("Items already exist in database. Use force=true to override.");
+            }
+
             try
             {
+                Random rnd = new Random();
                 string[] Names =
                 {
                     "Cucumber", "Melon", "Strawberry", "Kiwi", "Lime", "Coconut",
@@ -61,7 +73,7 @@ namespace server.Controllers
                     Message = "Database seeded successfully",
                     ItemsCreated = savedCount,
                     ItemsRequested = count,
-                    Timestamp = DateTime.UtcNow
+                    Timestamp = DateTime.UtcNow,
                 });
             }
             catch (Exception ex)
