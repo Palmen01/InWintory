@@ -1,132 +1,79 @@
 <div class="container mx-auto px-4 py-8">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Inventory Management</h1>
-            <p class="text-gray-600">Monitor your inventory levels and reorder thresholds</p>
-        </div>
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Inventory Management</h1>
+    <p class="text-gray-600">Monitor your inventory levels and reorder thresholds</p>
+  </div>
 
-        <!-- Grid Header -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-            <div class="grid grid-cols-4 gap-4 p-4 bg-gray-50 rounded-t-lg border-b border-gray-200">
-                <div class="font-semibold text-gray-700">ID</div>
-                <div class="font-semibold text-gray-700">Name</div>
-                <div class="font-semibold text-gray-700">Quantity</div>
-                <div class="font-semibold text-gray-700">Reorder Threshold</div>
-            </div>
+  <div *ngIf="isLoading" class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+    <p class="text-gray-600">Loading items...</p>
+  </div>
 
-            <!-- Grid Items -->
-            <div class="divide-y divide-gray-200">
-                <div class="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div class="text-sm font-mono text-blue-600">#001</div>
-                    <div class="font-medium text-gray-900">Premium Coffee Beans</div>
-                    <div class="flex items-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            245 units
-                        </span>
-                    </div>
-                    <div class="text-gray-600">50 units</div>
-                </div>
-
-                <div class="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div class="text-sm font-mono text-blue-600">#002</div>
-                    <div class="font-medium text-gray-900">Organic Tea Leaves</div>
-                    <div class="flex items-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                            32 units
-                        </span>
-                    </div>
-                    <div class="text-gray-600">30 units</div>
-                </div>
-
-                <div class="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div class="text-sm font-mono text-blue-600">#003</div>
-                    <div class="font-medium text-gray-900">Disposable Cups</div>
-                    <div class="flex items-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                            12 units
-                        </span>
-                    </div>
-                    <div class="text-gray-600">25 units</div>
-                </div>
-
-                <div class="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div class="text-sm font-mono text-blue-600">#004</div>
-                    <div class="font-medium text-gray-900">Sugar Packets</div>
-                    <div class="flex items-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            180 units
-                        </span>
-                    </div>
-                    <div class="text-gray-600">40 units</div>
-                </div>
-
-                <div class="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div class="text-sm font-mono text-blue-600">#005</div>
-                    <div class="font-medium text-gray-900">Milk Cartons</div>
-                    <div class="flex items-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                            18 units
-                        </span>
-                    </div>
-                    <div class="text-gray-600">20 units</div>
-                </div>
-
-                <div class="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div class="text-sm font-mono text-blue-600">#006</div>
-                    <div class="font-medium text-gray-900">Pastries Mix</div>
-                    <div class="flex items-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            95 units
-                        </span>
-                    </div>
-                    <div class="text-gray-600">15 units</div>
-                </div>
-
-                <div class="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div class="text-sm font-mono text-blue-600">#007</div>
-                    <div class="font-medium text-gray-900">Cleaning Supplies</div>
-                    <div class="flex items-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                            3 units
-                        </span>
-                    </div>
-                    <div class="text-gray-600">10 units</div>
-                </div>
-
-                <div class="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div class="text-sm font-mono text-blue-600">#008</div>
-                    <div class="font-medium text-gray-900">Napkins</div>
-                    <div class="flex items-center">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            156 units
-                        </span>
-                    </div>
-                    <div class="text-gray-600">35 units</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Legend -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <h3 class="text-sm font-semibold text-gray-700 mb-3">Stock Level Indicators</h3>
-            <div class="flex flex-wrap gap-4 text-xs">
-                <div class="flex items-center">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-2">
-                        Good Stock
-                    </span>
-                    <span class="text-gray-600">Above reorder threshold</span>
-                </div>
-                <div class="flex items-center">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 mr-2">
-                        Low Stock
-                    </span>
-                    <span class="text-gray-600">Near reorder threshold</span>
-                </div>
-                <div class="flex items-center">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mr-2">
-                        Critical
-                    </span>
-                    <span class="text-gray-600">Below reorder threshold</span>
-                </div>
-            </div>
-        </div>
+  <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <div class="text-red-800">{{ error }}</div>
+      </div>
+      <button (click)="loadItems()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+        Retry
+      </button>
     </div>
+  </div>
+
+  <div *ngIf="!isLoading && !error && items.length > 0" class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+    <div class="grid grid-cols-4 gap-4 p-4 bg-gray-50 rounded-t-lg border-b border-gray-200">
+      <div class="font-semibold text-gray-700">ID</div>
+      <div class="font-semibold text-gray-700">Name</div>
+      <div class="font-semibold text-gray-700">Quantity</div>
+      <div class="font-semibold text-gray-700">Reorder Threshold</div>
+    </div>
+
+    <div class="divide-y divide-gray-200">
+      <div *ngFor="let item of items" class="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 transition-colors">
+        <div class="text-sm font-mono text-blue-600">#{{ item.id.toString().padStart(3, '0') }}</div>
+        <div class="font-medium text-gray-900">{{ item.name }}</div>
+        <div class="flex items-center">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                [ngClass]="{
+                  'bg-green-100 text-green-800': getStockStatus(item) === 'good',
+                  'bg-yellow-100 text-yellow-800': getStockStatus(item) === 'low',
+                  'bg-red-100 text-red-800': getStockStatus(item) === 'critical'
+                }">
+            {{ item.quantity }} units
+          </span>
+        </div>
+        <div class="text-gray-600">{{ item.reorderThreshold }} units</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !error && items.length === 0" class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+    <p class="text-gray-600 text-lg">No items found.</p>
+  </div>
+
+  <div *ngIf="!isLoading && !error && items.length > 0" class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <h3 class="text-sm font-semibold text-gray-700 mb-3">Stock Level Indicators</h3>
+    <div class="flex flex-wrap gap-4 text-xs">
+      <div class="flex items-center">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-2">
+          Good Stock
+        </span>
+        <span class="text-gray-600">Above reorder threshold</span>
+      </div>
+      <div class="flex items-center">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 mr-2">
+          Low Stock
+        </span>
+        <span class="text-gray-600">Near reorder threshold (within 20%)</span>
+      </div>
+      <div class="flex items-center">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mr-2">
+          Critical
+        </span>
+        <span class="text-gray-600">At or below reorder threshold</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
