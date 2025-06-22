@@ -1,31 +1,23 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ApiService, Item } from '../service/api.service';
+import { ApiService} from '../service/api.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-item-button',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './item-button.component.html',
   styleUrl: './item-button.component.css'
 })
 export class ItemButtonComponent {
 
-  
-  constructor(private apiService: ApiService) {}
-
-  @Input() variant: 'primary' | 'danger' | 'neutral' = 'primary';
+  @Input() variant: 'primary' | 'neutral' | 'danger' = 'primary';
   @Input() loading = false;
   @Input() disabled = false;
   @Output() onClick = new EventEmitter<Event>();
 
-  order(item: Item) {
-  
-  }
-
-  sell(item: Item) {
-    
-  }
-
-  remove(item: Item) {
-    
+  variantClasses = {
+    primary: 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700',
+    neutral: 'bg-green-600 text-gray-700 border-green-300 hover:bg-green-700',
+    danger: 'bg-red-600 text-white border-red-600 hover:bg-red-700'
   }
 }

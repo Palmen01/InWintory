@@ -16,12 +16,17 @@ export interface Item {
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://localhost:7128/api/Item/Items';
+  private GetAllItemsApi = 'https://localhost:7128/api/Item/Items';
+  private SellItemApi = "https://localhost:7128/api/Item/Items"
 
   constructor(private http: HttpClient) {}
 
   // Method to get all items
   getAllItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.apiUrl);
+    return this.http.get<Item[]>(this.GetAllItemsApi);
+  }
+
+  SellItem(): Observable<Item[]> {
+    return this.http.get<Item[]>(this.SellItemApi)
   }
 }

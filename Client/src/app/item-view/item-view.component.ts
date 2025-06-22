@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ApiService, Item } from '../service/api.service';
 import { CommonModule } from '@angular/common';
+import { ItemButtonComponent } from '../item-button/item-button.component';
 
 @Component({
   selector: 'app-item-view',
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, ItemButtonComponent],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.css'
 })
@@ -45,5 +46,17 @@ export class ItemViewComponent {
     } else {
       return 'good';
     }
+  }
+
+  order(item: Item) {
+  
+  }
+
+  sell(item: Item) {
+    
+  }
+
+  remove(item: Item) {
+    
   }
 }
