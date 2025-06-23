@@ -25,5 +25,41 @@ namespace server.Controllers
             var items = await _context.Items.ToListAsync();
             return Ok(items);
         }
+
+        // Sell quantity of an item for a cost
+        [HttpPut]
+        public async Task<IActionResult> SellItem(int id, int quantity)
+        {
+            var item = await _context.Items.FindAsync(id);
+            item.Quantity -= quantity;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        // Add more items to the Database for a cost
+        [HttpPost]
+        public async Task<IActionResult> OrderItem(int id, int quantity)
+        {
+            var item = await _context.Items.FindAsync(id);
+            item.Quantity += quantity;
+            await _context.SaveChangesAsync();
+            return Ok(item);
+        }
+
+        // Delete an item from the database
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteItem(int id)
+        {
+            var item = await _context.Items.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            _context.Items.Remove(item);
+            await _context.SaveChangesAsync();
+
+            return Ok(item);
+        }
     }
 }
