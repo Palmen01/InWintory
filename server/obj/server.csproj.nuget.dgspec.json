@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\server.csproj": {}
+    "C:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\server.csproj": {}
   },
   "projects": {
-    "c:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\server.csproj": {
+    "C:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\server.csproj",
+        "projectUniqueName": "C:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\server.csproj",
         "projectName": "server",
-        "projectPath": "c:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\server.csproj",
+        "projectPath": "C:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\server.csproj",
         "packagesPath": "C:\\Users\\simon\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\obj\\",
+        "outputPath": "C:\\Users\\simon\\Desktop\\projects\\InWintory\\server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
