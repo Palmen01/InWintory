@@ -18,6 +18,8 @@ export interface Item {
 export class ApiService {
   private GetAllItemsApi = 'https://localhost:7128/api/Item/Items';
   private SellItemApi = "https://localhost:7128/api/Item/Items"
+  private OrderItemApi = "https://localhost:7128/api/Item/Items"
+  private RemoveItemApi = "https://localhost:7128/api/Item/Items"
 
   constructor(private http: HttpClient) {}
 
