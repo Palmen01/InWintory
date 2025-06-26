@@ -28,7 +28,7 @@ export class ApiService {
     return this.http.get<Item[]>(this.GetAllItemsApi);
   }
 
-  SellItem(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.SellItemApi)
-  }
+  // SellItem(): {
+    
+  // }
 }
