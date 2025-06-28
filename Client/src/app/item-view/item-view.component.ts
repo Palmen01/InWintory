@@ -57,10 +57,12 @@ export class ItemViewComponent {
   }
 
   order(item: Item) {
-    
+    this.apiService.OrderItem(item.id, 1).subscribe({
+      next: (updatedItem) => {
+        item.quantity = updatedItem.quantity
+      }
+    })
   }
-
-  
 
   remove(item: Item) {
     

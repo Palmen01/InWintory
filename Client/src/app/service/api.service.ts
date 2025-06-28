@@ -33,4 +33,9 @@ export class ApiService {
     const url = `${this.SellItemApi}?id=${id}&quantity=${quantity}`;
     return this.http.put<Item>(url, {});
   }
+
+  OrderItem(id: number, quantity: number): Observable<Item> {
+    const url = `${this.OrderItemApi}?id=${id}&quantity=${quantity}`;
+    return this.http.post<Item>(url, {});
+  }
 }
