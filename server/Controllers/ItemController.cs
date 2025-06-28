@@ -19,7 +19,7 @@ namespace server.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Items")]
+        [HttpGet("All-Items")]
         public async Task<IActionResult> GetAllItems()
         {
             var items = await _context.Items.ToListAsync();
@@ -27,7 +27,7 @@ namespace server.Controllers
         }
 
         // Sell quantity of an item for a cost
-        [HttpPut]
+        [HttpPut("Sell-Item")]
         public async Task<IActionResult> SellItem(int id, int quantity)
         {
             var item = await _context.Items.FindAsync(id);
@@ -37,7 +37,7 @@ namespace server.Controllers
         }
 
         // Add more items to the Database for a cost
-        [HttpPost]
+        [HttpPost("Order-Item")]
         public async Task<IActionResult> OrderItem(int id, int quantity)
         {
             var item = await _context.Items.FindAsync(id);
@@ -47,7 +47,7 @@ namespace server.Controllers
         }
 
         // Delete an item from the database
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete-Item")]
         public async Task<IActionResult> DeleteItem(int id)
         {
             var item = await _context.Items.FindAsync(id);
