@@ -48,13 +48,19 @@ export class ItemViewComponent {
     }
   }
 
-  order(item: Item) {
-  
+  sell(item: Item) {
+    this.apiService.SellItem(item.id, 1).subscribe({
+      next: (updatedItem) => {
+      item.quantity = updatedItem.quantity;
+    }
+    });
   }
 
-  sell(item: Item) {
+  order(item: Item) {
     
   }
+
+  
 
   remove(item: Item) {
     

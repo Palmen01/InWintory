@@ -16,10 +16,10 @@ export interface Item {
   providedIn: 'root'
 })
 export class ApiService {
-  private GetAllItemsApi = 'https://localhost:7128/api/Item/Items';
-  private SellItemApi = "https://localhost:7128/api/Item/Items"
-  private OrderItemApi = "https://localhost:7128/api/Item/Items"
-  private RemoveItemApi = "https://localhost:7128/api/Item/Items"
+  private GetAllItemsApi = 'https://localhost:7128/api/Item/All-Items';
+  private SellItemApi = "https://localhost:7128/api/Item/Sell-Item"
+  private OrderItemApi = "https://localhost:7128/api/Item/Order-Item"
+  private RemoveItemApi = "https://localhost:7128/api/Item/Delete-Item"
 
   constructor(private http: HttpClient) {}
 
@@ -28,7 +28,9 @@ export class ApiService {
     return this.http.get<Item[]>(this.GetAllItemsApi);
   }
 
-  // SellItem(): {
-    
-  // }
+  // Method to sell items
+  SellItem(id: number, quantity: number): Observable<Item> {
+    const url = `${this.SellItemApi}?id=${id}&quantity=${quantity}`;
+    return this.http.put<Item>(url, {});
+  }
 }

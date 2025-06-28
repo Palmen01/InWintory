@@ -33,7 +33,7 @@ namespace server.Controllers
             var item = await _context.Items.FindAsync(id);
             item.Quantity -= quantity;
             await _context.SaveChangesAsync();
-            return Ok();
+            return Ok(item);
         }
 
         // Add more items to the Database for a cost
