@@ -38,4 +38,9 @@ export class ApiService {
     const url = `${this.OrderItemApi}?id=${id}&quantity=${quantity}`;
     return this.http.post<Item>(url, {});
   }
+
+  RemoveItem(id: number): Observable<Item> {
+    const url = `${this.RemoveItemApi}?id=${id}`;
+    return this.http.delete<Item>(url, {});
+  }
 }

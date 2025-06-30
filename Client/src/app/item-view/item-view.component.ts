@@ -15,8 +15,8 @@ export class ItemViewComponent {
   isLoading = false;
   error: string | null = null;
 
-  constructor(private apiService: ApiService) {}
-  
+  constructor(private apiService: ApiService) { }
+
   ngOnInit(): void {
     this.loadItems();
   }
@@ -24,7 +24,7 @@ export class ItemViewComponent {
   loadItems(): void {
     this.isLoading = true;
     this.error = null;
-    
+
     this.apiService.getAllItems().subscribe({
       next: (data) => {
         this.items = data;
@@ -51,8 +51,8 @@ export class ItemViewComponent {
   sell(item: Item) {
     this.apiService.SellItem(item.id, 1).subscribe({
       next: (updatedItem) => {
-      item.quantity = updatedItem.quantity;
-    }
+        item.quantity = updatedItem.quantity;
+      }
     });
   }
 
@@ -65,6 +65,14 @@ export class ItemViewComponent {
   }
 
   remove(item: Item) {
-    
+    this.apiService.RemoveItem(item.id).subscribe({
+      next: (deletedItem) => {
+        this.items = this.items.filter(i => i.id !== deletedItem.id);
+      },
+      error: (error) => {
+        console.error('Error removing item:', error);
+        this.error = 'Failed to remove item. Please try again.';
+      }
+    });
   }
 }
