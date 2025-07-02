@@ -15,11 +15,17 @@ export class ItemViewComponent {
   items: Item[] = [];
   isLoading = false;
   error: string | null = null;
-  AddItemisOpen = false;
+  isAddItemModalOpen = false;
 
   constructor(private apiService: ApiService) { }
 
-  
+  openAddItemModal() {
+    this.isAddItemModalOpen = true;
+  }
+
+  closeAddItemModal() {
+    this.isAddItemModalOpen = false;
+  }
 
   ngOnInit(): void {
     this.loadItems();

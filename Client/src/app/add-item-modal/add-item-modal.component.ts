@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-item-modal',
-  imports: [],
+  imports: [NgIf],
   templateUrl: './add-item-modal.component.html',
   styleUrl: './add-item-modal.component.css'
 })
@@ -18,4 +18,10 @@ export class AddItemModalComponent {
   }
 
   AddItem() {}
+
+  onBackdropClick(event: Event) {
+    if (event.target === event.currentTarget) {
+      this.closeAddItemModal();
+    }
+  }
 }

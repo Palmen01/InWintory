@@ -1,10 +1,11 @@
+<!-- (addItem)="onAddItem($event)" -->
 
+<app-add-item-modal [isOpen]="isAddItemModalOpen" (close)="closeAddItemModal()"></app-add-item-modal>
 
-<app-add-item-modal 
-  [isOpen]="isAddItemModalOpen" 
-  (close)="closeAddItemModal()" 
-  (addItem)="onAddItem($event)">
-</app-add-item-modal>
+<button (click)="openAddItemModal()"
+  class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors">
+  Add Item
+</button>
 
 <!-- Info and Loading -->
 <div class="container mx-auto px-4 py-8">
