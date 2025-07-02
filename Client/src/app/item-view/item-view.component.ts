@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { ApiService, Item } from '../service/api.service';
 import { CommonModule } from '@angular/common';
 import { ItemButtonComponent } from '../item-button/item-button.component';
+import { AddItemModalComponent } from '../add-item-modal/add-item-modal.component';
 
 @Component({
   selector: 'app-item-view',
-  imports: [CommonModule, RouterOutlet, ItemButtonComponent],
+  imports: [CommonModule, RouterOutlet, ItemButtonComponent, AddItemModalComponent],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.css'
 })
@@ -14,8 +15,11 @@ export class ItemViewComponent {
   items: Item[] = [];
   isLoading = false;
   error: string | null = null;
+  AddItemisOpen = false;
 
   constructor(private apiService: ApiService) { }
+
+  
 
   ngOnInit(): void {
     this.loadItems();

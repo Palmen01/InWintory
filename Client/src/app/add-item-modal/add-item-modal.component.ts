@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-item-modal',
@@ -7,9 +9,13 @@ import { Component } from '@angular/core';
   styleUrl: './add-item-modal.component.css'
 })
 export class AddItemModalComponent {
+  @Input() isOpen = false;
+  @Output() close = new EventEmitter<void>();
+  @Output() addItem = new EventEmitter<{name: string, quantity: number, reorderThreshold: number}>();
 
-
-  closeAddItemModal() {}
+  closeAddItemModal() {
+    this.close.emit();
+  }
 
   AddItem() {}
 }
