@@ -1,11 +1,5 @@
 <!-- (addItem)="onAddItem($event)" -->
-
 <app-add-item-modal [isOpen]="isAddItemModalOpen" (close)="closeAddItemModal()"></app-add-item-modal>
-
-<button (click)="openAddItemModal()"
-  class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors">
-  Add Item
-</button>
 
 <!-- Info and Loading -->
 <div class="container mx-auto px-4 py-8">
@@ -13,6 +7,11 @@
     <h1 class="text-3xl font-bold text-gray-900 mb-2">Inventory Management</h1>
     <p class="text-gray-600">Monitor your inventory levels and reorder thresholds</p>
   </div>
+
+  <button (click)="openAddItemModal()"
+    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors my-3">
+    Add Item
+  </button>
 
   <div *ngIf="isLoading" class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
