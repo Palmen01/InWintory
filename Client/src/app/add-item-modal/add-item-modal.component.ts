@@ -105,6 +105,5 @@ export class AddItemModalComponent {
   getModalTransform(): string {
     return `translate(${this.modalPosition.x}px, ${this.modalPosition.y}px)`;
   }
-
   //#endregion
 }
