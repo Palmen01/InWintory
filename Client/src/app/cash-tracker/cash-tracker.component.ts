@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiService } from '../service/api.service';
+import { ApiService, Item } from '../service/api.service';
 
 @Component({
   selector: 'app-cash-tracker',
@@ -8,8 +8,25 @@ import { ApiService } from '../service/api.service';
   styleUrl: './cash-tracker.component.css'
 })
 export class CashTrackerComponent {
-
+  items: Item[] = [];
   constructor(private apiService: ApiService) { }
 
-  // Track money via db
+  totalValue = 0;
+
+  ngOnInit(): void {
+    this.loadItems();
+  }
+
+  loadItems(): void {
+    this.apiService.getAllItems().subscribe({
+      next: (data) => {
+        this.items = data;
+        this.LoadTotalValue();
+      },
+    });
+  }
+
+  LoadTotalValue(): void {
+    this.items.forEach(i => this.totalValue += i.quantity * i.cost)
+  }
 }

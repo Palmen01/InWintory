@@ -4,10 +4,11 @@ import { ApiService, Item } from '../service/api.service';
 import { CommonModule } from '@angular/common';
 import { ItemButtonComponent } from '../item-button/item-button.component';
 import { AddItemModalComponent } from '../add-item-modal/add-item-modal.component';
+import { CashTrackerComponent } from '../cash-tracker/cash-tracker.component';
 
 @Component({
   selector: 'app-item-view',
-  imports: [CommonModule, RouterOutlet, ItemButtonComponent, AddItemModalComponent],
+  imports: [CommonModule, RouterOutlet, ItemButtonComponent, AddItemModalComponent, CashTrackerComponent],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.css'
 })

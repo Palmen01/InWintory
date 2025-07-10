@@ -8,10 +8,16 @@
     <p class="text-gray-600">Monitor your inventory levels and reorder thresholds</p>
   </div>
 
-  <button (click)="openAddItemModal()"
-    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors my-3">
-    Add Item
-  </button>
+
+  <div class="flex justify-between my-4">
+    <button (click)="openAddItemModal()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors my-3">
+      Add Item
+    </button>
+
+    <app-cash-tracker></app-cash-tracker>
+  </div>
+
 
   <div *ngIf="isLoading" class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
