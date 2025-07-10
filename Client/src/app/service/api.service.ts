@@ -9,6 +9,7 @@ export interface Item {
   unitsSold: number;
   unitsLost: number;
   reorderThreshold: number;
+  cost: number;
   restockOrders: any;
 }
 

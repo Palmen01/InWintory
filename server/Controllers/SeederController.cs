@@ -19,7 +19,7 @@ namespace server.Controllers
         }
 
         [HttpPost("items")]
-        public async Task<IActionResult> SeedItems([FromQuery] int count = 25, [FromQuery] bool force = false)
+        public async Task<IActionResult> SeedItems(int count = 25, bool force = false)
         {
             if (count <= 0 || count > 1000)
             {
@@ -60,6 +60,7 @@ namespace server.Controllers
                         UnitsSold = 0,
                         UnitsLost = rnd.Next(0, 25),
                         ReorderThreshold = rnd.Next(5, 25), // Reorder threshold lower than quantity at seed.
+                        Cost = rnd.Next(5, 20),
                     });
                 }
 

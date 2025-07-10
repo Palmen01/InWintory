@@ -21,7 +21,8 @@ namespace server.Migrations
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UnitsSold = table.Column<int>(type: "int", nullable: false),
                     UnitsLost = table.Column<int>(type: "int", nullable: false),
-                    ReorderThreshold = table.Column<int>(type: "int", nullable: false)
+                    ReorderThreshold = table.Column<int>(type: "int", nullable: false),
+                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
