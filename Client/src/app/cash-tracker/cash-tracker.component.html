@@ -8,8 +8,9 @@
             </svg>
         </div>
         <div>
-            <p class="text-gray-500 text-sm">Total Cash</p>
-            <h2 class="text-2xl font-bold text-gray-800">{{totalValue}} £</h2>
+            <p class="text-gray-500 text-sm">Total Value</p>
+            <p class="text-2xl font-bold text-gray-800">Total Value: {{ totalValue | currency:'EUR':'symbol':'1.2-2' }}</p>
+
         </div>
     </div>
 </div>

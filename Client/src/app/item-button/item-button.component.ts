@@ -17,7 +17,7 @@ export class ItemButtonComponent {
 
   variantClasses = {
     primary: 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700',
-    neutral: 'bg-green-600 text-gray-600 border-green-300 hover:bg-green-700',
+    neutral: 'bg-green-600 text-white border-green-300 hover:bg-green-700',
     danger: 'bg-red-600 text-white border-red-600 hover:bg-red-700'
   }
 }

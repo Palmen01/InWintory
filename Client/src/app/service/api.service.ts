@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 export interface Item {
   id: number;
@@ -24,12 +24,10 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  // Method to get all items
   getAllItems(): Observable<Item[]> {
     return this.http.get<Item[]>(this.GetAllItemsApi);
   }
 
-  // Method to sell items
   SellItem(id: number, quantity: number): Observable<Item> {
     const url = `${this.SellItemApi}?id=${id}&quantity=${quantity}`;
     return this.http.put<Item>(url, {});
@@ -44,4 +42,7 @@ export class ApiService {
     const url = `${this.RemoveItemApi}?id=${id}`;
     return this.http.delete<Item>(url, {});
   }
+
+
+  // add real time currency tracking with BehaviorSubject
 }

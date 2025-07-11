@@ -9,13 +9,15 @@
   </div>
 
 
-  <div class="flex justify-between my-4">
-    <button (click)="openAddItemModal()"
-      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors my-3">
-      Add Item
-    </button>
+  <div class="flex justify-between my-2 items-center">
+    <div>
+      <button (click)="openAddItemModal()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors my-3">
+        Add Item
+      </button>
+    </div>
 
-    <app-cash-tracker></app-cash-tracker>
+    <app-cash-tracker class="px-4 py-10"></app-cash-tracker>
   </div>
 
 

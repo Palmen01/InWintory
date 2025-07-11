@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ApiService, Item } from '../service/api.service';
-
+import { CurrencyPipe } from '@angular/common';
 @Component({
   selector: 'app-cash-tracker',
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './cash-tracker.component.html',
   styleUrl: './cash-tracker.component.css'
 })
@@ -27,6 +27,7 @@ export class CashTrackerComponent {
   }
 
   LoadTotalValue(): void {
+    this.totalValue = 0;
     this.items.forEach(i => this.totalValue += i.quantity * i.cost)
   }
 }
