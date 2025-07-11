@@ -22,9 +22,9 @@ export class ApiService {
   private OrderItemApi = "https://localhost:7128/api/Item/Order-Item"
   private AddItemApi = "https://localhost:7128/api/Item/Add-Item"
   private RemoveItemApi = "https://localhost:7128/api/Item/Delete-Item"
-  
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
 
   getAllItems(): Observable<Item[]> {
     return this.http.get<Item[]>(this.GetAllItemsApi);
@@ -40,9 +40,15 @@ export class ApiService {
     return this.http.post<Item>(url, {});
   }
 
-  // AddItem(id: number, quantity: number): Observable<Item> {
-    
-  // }
+  AddItem(name: string, quantity: number, reorderThreshold: number, cost: number): Observable<Item> {
+    const body = {
+      name: name,
+      quantity: quantity,
+      reorderThreshold: reorderThreshold,
+      cost: cost
+    };
+    return this.http.post<Item>(this.AddItemApi, body);
+  }
 
   RemoveItem(id: number): Observable<Item> {
     const url = `${this.RemoveItemApi}?id=${id}`;

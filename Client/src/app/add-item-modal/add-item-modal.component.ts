@@ -1,24 +1,43 @@
 import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { NgIf, CurrencyPipe } from '@angular/common';
-import { FormsModule} from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-add-item-modal',
-  imports: [NgIf, CurrencyPipe, FormsModule ],
+  imports: [NgIf, CurrencyPipe, FormsModule],
   templateUrl: './add-item-modal.component.html',
   styleUrl: './add-item-modal.component.css'
 })
 export class AddItemModalComponent {
+  itemName: string = "";
+  itemQuantity: number = 0;
+  itemThreshhold: number = 0;
   itemCost: number = 0;
   @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
-  @Output() addItem = new EventEmitter<{ name: string, quantity: number, reorderThreshold: number }>();
+
+
+  constructor(private apiService: ApiService) { }
+
+  addItem(form: NgForm) {
+    if (form.valid) {
+      this.apiService.AddItem(this.itemName, this.itemQuantity, this.itemThreshhold, this.itemCost
+      ).subscribe({
+        next: (response) => {
+          console.log('Item added successfully:', response);
+          this.closeAddItemModal();
+        },
+        error: (error) => {
+          console.error('Error adding item:', error);
+        }
+      });
+    }
+  }
 
   closeAddItemModal() {
     this.close.emit();
   }
-
-  AddItem() { }
 
   onBackdropClick(event: Event) {
     if (event.target === event.currentTarget) {
