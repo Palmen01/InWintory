@@ -8,14 +8,16 @@ namespace server.Data
         public InventoryDbContext(DbContextOptions<InventoryDbContext> options) : base(options) { }
 
         public DbSet<Item> Items { get; set; }
-        public DbSet<RestockOrder> RestockOrders { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-        modelBuilder.Entity<RestockOrder>()
-            .HasOne(r => r.Item)
-            .WithMany(i => i.RestockOrders)
-            .HasForeignKey(r => r.ItemId);
-        }
+        
+        // public DbSet<RestockOrder> RestockOrders { get; set; }
+
+        // protected override void OnModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     modelBuilder.Entity<RestockOrder>()
+        //         .HasOne(r => r.Item)
+        //         .WithMany(i => i.RestockOrders)
+        //         .HasForeignKey(r => r.ItemId);
+        // }
     }
 }

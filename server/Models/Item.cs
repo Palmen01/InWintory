@@ -10,7 +10,7 @@ namespace server.Models
         public int ReorderThreshold { get; set; }
         public decimal Cost { get; set; }
 
-         // Nav prop
-        public List<RestockOrder>? RestockOrders { get; set; }
+        //  // Nav prop
+        // public List<RestockOrder>? RestockOrders { get; set; }
     }
 }

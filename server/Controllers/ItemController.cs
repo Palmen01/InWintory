@@ -36,7 +36,7 @@ namespace server.Controllers
             return Ok(item);
         }
 
-        // Add more items to the Database for a cost
+        // add more of an item to the Database
         [HttpPost("Order-Item")]
         public async Task<IActionResult> OrderItem(int id, int quantity)
         {
@@ -44,6 +44,25 @@ namespace server.Controllers
             item.Quantity += quantity;
             await _context.SaveChangesAsync();
             return Ok(item);
+        }
+
+        // Add new items to the database
+        [HttpPost("Add-Item")]
+        public async Task<IActionResult> AddItem(Item _item)
+        {
+            var newItem = new Item()
+            {
+                Id = _item.Id,
+                Name = _item.Name,
+                Quantity = _item.Quantity,
+                UnitsSold = _item.UnitsSold,
+                UnitsLost = _item.UnitsLost,
+                ReorderThreshold = _item.ReorderThreshold,
+                Cost = _item.Cost
+            };
+            _context.Items.Add(newItem);
+            await _context.SaveChangesAsync();
+            return Ok(newItem);
         }
 
         // Delete an item from the database

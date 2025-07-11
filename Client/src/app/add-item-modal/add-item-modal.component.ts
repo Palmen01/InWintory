@@ -1,14 +1,15 @@
 import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgIf, CurrencyPipe } from '@angular/common';
+import { FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-add-item-modal',
-  imports: [NgIf],
+  imports: [NgIf, CurrencyPipe, FormsModule ],
   templateUrl: './add-item-modal.component.html',
   styleUrl: './add-item-modal.component.css'
 })
 export class AddItemModalComponent {
+  itemCost: number = 0;
   @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
   @Output() addItem = new EventEmitter<{ name: string, quantity: number, reorderThreshold: number }>();
