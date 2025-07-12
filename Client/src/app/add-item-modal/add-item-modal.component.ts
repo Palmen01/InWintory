@@ -14,24 +14,27 @@ export class AddItemModalComponent {
   itemQuantity: number = 0;
   itemThreshhold: number = 0;
   itemCost: number = 0;
+  showErrors = false;
   @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
-
 
   constructor(private apiService: ApiService) { }
 
   addItem(form: NgForm) {
+    this.showErrors = true;
+
     if (form.valid) {
-      this.apiService.AddItem(this.itemName, this.itemQuantity, this.itemThreshhold, this.itemCost
-      ).subscribe({
-        next: (response) => {
-          console.log('Item added successfully:', response);
-          this.closeAddItemModal();
-        },
-        error: (error) => {
-          console.error('Error adding item:', error);
-        }
-      });
+      this.apiService.AddItem(this.itemName, this.itemQuantity, this.itemThreshhold, this.itemCost)
+        .subscribe({
+          next: (response) => {
+            console.log('Item added successfully:', response);
+            this.closeAddItemModal();
+            window.location.reload();
+          },
+          error: (error) => {
+            console.error('Error adding item:', error);
+          }
+        });
     }
   }
 
