@@ -48,17 +48,17 @@ namespace server.Controllers
 
         // Add new items to the database
         [HttpPost("Add-Item")]
-        public async Task<IActionResult> AddItem(Item _item)
+        public async Task<IActionResult> AddItem(Item item)
         {
             var newItem = new Item()
             {
-                Id = _item.Id,
-                Name = _item.Name,
-                Quantity = _item.Quantity,
-                UnitsSold = _item.UnitsSold,
-                UnitsLost = _item.UnitsLost,
-                ReorderThreshold = _item.ReorderThreshold,
-                Cost = _item.Cost
+                Id = item.Id,
+                Name = item.Name,
+                Quantity = item.Quantity,
+                UnitsSold = item.UnitsSold,
+                UnitsLost = item.UnitsLost,
+                ReorderThreshold = item.ReorderThreshold,
+                Cost = item.Cost
             };
             _context.Items.Add(newItem);
             await _context.SaveChangesAsync();
@@ -79,6 +79,21 @@ namespace server.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(item);
+        }
+
+        [HttpPut("Edit-Item/{id}")]
+        public async Task<IActionResult> EditItem(int id, Item updatedItem)
+        {
+            var existingItem = await _context.Items.FindAsync(id);
+            
+            // Update the properties
+            existingItem.Name = updatedItem.Name;
+            existingItem.Quantity = updatedItem.Quantity;
+            existingItem.ReorderThreshold = updatedItem.ReorderThreshold;
+            existingItem.Cost = updatedItem.Cost;
+
+            await _context.SaveChangesAsync();
+            return Ok(existingItem);
         }
     }
 }

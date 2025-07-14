@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { ItemButtonComponent } from '../item-button/item-button.component';
 import { AddItemModalComponent } from '../add-item-modal/add-item-modal.component';
 import { CashTrackerComponent } from '../cash-tracker/cash-tracker.component';
+import { EditItemModalComponent } from '../edit-item-modal/edit-item-modal.component';
 
 @Component({
   selector: 'app-item-view',
-  imports: [CommonModule, RouterOutlet, ItemButtonComponent, AddItemModalComponent, CashTrackerComponent],
+  imports: [CommonModule, RouterOutlet, ItemButtonComponent, AddItemModalComponent, CashTrackerComponent, EditItemModalComponent],
   templateUrl: './item-view.component.html',
   styleUrl: './item-view.component.css'
 })
@@ -17,6 +18,7 @@ export class ItemViewComponent {
   isLoading = false;
   error: string | null = null;
   isAddItemModalOpen = false;
+  isEditItemModalOpen = false;
 
   constructor(private apiService: ApiService) { }
 
@@ -26,6 +28,14 @@ export class ItemViewComponent {
 
   closeAddItemModal() {
     this.isAddItemModalOpen = false;
+  }
+
+  openEditItemModal() {
+    this.isEditItemModalOpen = true;
+  }
+
+  closeEditItemModal() {
+    this.isEditItemModalOpen = false;
   }
 
   ngOnInit(): void {

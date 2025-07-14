@@ -22,6 +22,7 @@ export class ApiService {
   private OrderItemApi = "https://localhost:7128/api/Item/Order-Item"
   private AddItemApi = "https://localhost:7128/api/Item/Add-Item"
   private RemoveItemApi = "https://localhost:7128/api/Item/Delete-Item"
+  private EditItemApi = "https://localhost:7128/api/Item/Edit-Item/{id}"
 
 
   constructor(private http: HttpClient) { }
@@ -55,6 +56,7 @@ export class ApiService {
     return this.http.delete<Item>(url, {});
   }
 
-
-  // add real time currency tracking with BehaviorSubject
+  EditItem() {
+    
+  }
 }
