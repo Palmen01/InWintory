@@ -23,21 +23,7 @@ export class EditItemModalComponent {
   constructor(private apiService: ApiService) { }
   
   editItem(form: NgForm) {
-    this.showErrors = true;
-
-    if (form.valid) {
-      this.apiService.EditItem(this.itemName, this.itemQuantity, this.itemThreshhold, this.itemCost)
-        .subscribe({
-          next: (response) => {
-            console.log('Item edited successfully:', response);
-            this.closeEditItemModal();
-            window.location.reload();
-          },
-          error: (error) => {
-            console.error('Error editing item:', error);
-          }
-        });
-    }
+    
   }
 
   closeEditItemModal() {

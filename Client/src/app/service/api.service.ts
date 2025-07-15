@@ -56,7 +56,8 @@ export class ApiService {
     return this.http.delete<Item>(url, {});
   }
 
-  EditItem() {
-    
+  EditItem(id: number, itemData: Item): Observable<Item> {
+    const url = this.EditItemApi.replace('{id}', id.toString());
+    return this.http.put<Item>(url, itemData);
   }
 }
