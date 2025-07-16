@@ -17,47 +17,36 @@ export interface Item {
   providedIn: 'root'
 })
 export class ApiService {
-  private GetAllItemsApi = 'https://localhost:7128/api/Item/All-Items';
-  private SellItemApi = "https://localhost:7128/api/Item/Sell-Item"
-  private OrderItemApi = "https://localhost:7128/api/Item/Order-Item"
-  private AddItemApi = "https://localhost:7128/api/Item/Add-Item"
-  private RemoveItemApi = "https://localhost:7128/api/Item/Delete-Item"
-  private EditItemApi = "https://localhost:7128/api/Item/Edit-Item/{id}"
-
+  private baseUrl = 'https://localhost:7128/api/items';
 
   constructor(private http: HttpClient) { }
 
   getAllItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.GetAllItemsApi);
+    return this.http.get<Item[]>(this.baseUrl);
   }
 
   SellItem(id: number, quantity: number): Observable<Item> {
-    const url = `${this.SellItemApi}?id=${id}&quantity=${quantity}`;
+    const url = `${this.baseUrl}/${id}/sell?quantity=${quantity}`;
     return this.http.put<Item>(url, {});
   }
 
   OrderItem(id: number, quantity: number): Observable<Item> {
-    const url = `${this.OrderItemApi}?id=${id}&quantity=${quantity}`;
-    return this.http.post<Item>(url, {});
+    const url = `${this.baseUrl}/${id}/restock?quantity=${quantity}`;
+    return this.http.patch<Item>(url, {});
   }
 
   AddItem(name: string, quantity: number, reorderThreshold: number, cost: number): Observable<Item> {
-    const body = {
-      name: name,
-      quantity: quantity,
-      reorderThreshold: reorderThreshold,
-      cost: cost
-    };
-    return this.http.post<Item>(this.AddItemApi, body);
+    const body = { name, quantity, reorderThreshold, cost };
+    return this.http.post<Item>(this.baseUrl, body);
   }
 
   RemoveItem(id: number): Observable<Item> {
-    const url = `${this.RemoveItemApi}?id=${id}`;
-    return this.http.delete<Item>(url, {});
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.delete<Item>(url);
   }
 
   EditItem(id: number, itemData: Item): Observable<Item> {
-    const url = this.EditItemApi.replace('{id}', id.toString());
+    const url = `${this.baseUrl}/${id}`;
     return this.http.put<Item>(url, itemData);
   }
 }
