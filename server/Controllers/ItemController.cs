@@ -22,6 +22,10 @@ namespace server.Controllers
         public async Task<IActionResult> GetAllItems()
         {
             var items = await _context.Items.ToListAsync();
+            if (items == null)
+            {
+                return NotFound();
+            }
             return Ok(items);
         }
 
@@ -29,6 +33,10 @@ namespace server.Controllers
         public async Task<IActionResult> GetItemById(int id)
         {
             var item = await _context.Items.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
             return Ok(item);
         }
 
