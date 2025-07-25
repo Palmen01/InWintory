@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using server.Data;
-using server.Models;
+using server.DTOs;
+using server.Interfaces;
+
 
 namespace server.Controllers
 {
@@ -9,23 +10,20 @@ namespace server.Controllers
     [Route("api/[controller]")]
     public class ItemsController : ControllerBase
     {
-        private readonly InventoryDbContext _context;
+        private readonly IItemService _itemService;
         private readonly ILogger<ItemsController> _logger;
 
-        public ItemsController(InventoryDbContext context, ILogger<ItemsController> logger)
+        public ItemsController(IItemService itemService, ILogger<ItemsController> logger)
         {
-            _context = context;
+            _itemService = itemService;
             _logger = logger;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetAllItems()
         {
-            var items = await _context.Items.ToListAsync();
-            if (items == null)
-            {
-                return NotFound();
-            }
+            var items = await _itemService.GetAllItemsAsync();
             return Ok(items);
         }
 

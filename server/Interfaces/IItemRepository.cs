@@ -1,6 +1,5 @@
 namespace server.Interfaces
 {
-    using server.Models;
     using server.DTOs;
 
     public interface IItemRepository

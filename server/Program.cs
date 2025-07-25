@@ -1,5 +1,8 @@
 using server.Data;
 using Microsoft.EntityFrameworkCore;
+using server.Interfaces;
+using server.Services;
+using server.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,9 @@ builder.Services.AddCors(options =>
                   .AllowAnyMethod();
         });
 });
+
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<IItemService, ItemService>();
 
 var app = builder.Build();
 
