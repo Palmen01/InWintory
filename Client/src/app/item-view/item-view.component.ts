@@ -87,8 +87,8 @@ export class ItemViewComponent {
 
   remove(item: Item) {
     this.apiService.RemoveItem(item.id).subscribe({
-      next: (deletedItem) => {
-        this.items = this.items.filter(i => i.id !== deletedItem.id);
+      next: () => {
+        this.items = this.items.filter(i => i.id !== item.id);
       },
       error: (error) => {
         console.error('Error removing item:', error);

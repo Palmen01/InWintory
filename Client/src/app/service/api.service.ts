@@ -40,9 +40,9 @@ export class ApiService {
     return this.http.post<Item>(this.baseUrl, body);
   }
 
-  RemoveItem(id: number): Observable<Item> {
+  RemoveItem(id: number): Observable<any> {
     const url = `${this.baseUrl}/${id}`;
-    return this.http.delete<Item>(url);
+    return this.http.delete(url);
   }
 
   EditItem(id: number, itemData: Item): Observable<Item> {
