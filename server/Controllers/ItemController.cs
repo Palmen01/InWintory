@@ -30,62 +30,77 @@ namespace server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItemById(int id)
         {
-            var item = await _context.Items.FindAsync(id);
+            var item = await _itemService.GetItemByIdAsync(id);
             if (item == null)
             {
-                return NotFound();
+                return NotFound($"Item with ID {id} not found");
             }
             return Ok(item);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateItem(Item item)
+        public async Task<IActionResult> CreateItem(ItemDto itemDto)
         {
-            _context.Items.Add(item);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetItemById), new { id = item.Id }, item);
+            var createdItem = await _itemService.CreateItemAsync(itemDto);
+            return CreatedAtAction(nameof(GetItemById), new { id = createdItem.Id }, createdItem);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateItem(int id, Item updatedItem)
+        public async Task<IActionResult> UpdateItem(int id, ItemDto itemDto)
         {
-            var existingItem = await _context.Items.FindAsync(id);
-
-            existingItem.Name = updatedItem.Name;
-            existingItem.Quantity = updatedItem.Quantity;
-            existingItem.ReorderThreshold = updatedItem.ReorderThreshold;
-            existingItem.Cost = updatedItem.Cost;
-
-            await _context.SaveChangesAsync();
-            return Ok(existingItem);
+            var updatedItem = await _itemService.UpdateItemAsync(id, itemDto);
+            if (updatedItem == null)
+            {
+                return NotFound($"Item with ID {id} not found");
+            }
+            return Ok(updatedItem);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {
-            var item = await _context.Items.FindAsync(id);
-            _context.Items.Remove(item);
-            await _context.SaveChangesAsync();
-            return Ok(item);
+            var deleted = await _itemService.DeleteItemAsync(id);
+            if (!deleted)
+            {
+                return NotFound($"Item with ID {id} not found");
+            }
+            return NoContent();
         }
 
         [HttpPut("{id}/sell")]
         public async Task<IActionResult> SellItem(int id, [FromQuery] int quantity)
         {
-            var item = await _context.Items.FindAsync(id);
-            item.Quantity -= quantity;
-            item.UnitsSold += quantity;
-            await _context.SaveChangesAsync();
-            return Ok(item);
+            if (quantity <= 0)
+            {
+                return BadRequest("Quantity must be greater than 0");
+            }
+
+            var success = await _itemService.SellItemAsync(id, quantity);
+            if (!success)
+            {
+                return BadRequest("Unable to sell item. Item not found or insufficient quantity.");
+            }
+
+            var updatedItem = await _itemService.GetItemByIdAsync(id);
+            return Ok(updatedItem);
         }
 
         [HttpPatch("{id}/restock")]
         public async Task<IActionResult> RestockItem(int id, [FromQuery] int quantity)
         {
-            var item = await _context.Items.FindAsync(id);
-            item.Quantity += quantity;
-            await _context.SaveChangesAsync();
-            return Ok(item);
+            if (quantity <= 0)
+            {
+                return BadRequest("Quantity must be greater than 0");
+            }
+
+            var success = await _itemService.RestockItemAsync(id, quantity);
+            if (!success)
+            {
+                return NotFound($"Item with ID {id} not found");
+            }
+
+            var updatedItem = await _itemService.GetItemByIdAsync(id);
+            return Ok(updatedItem);
         }
     }
 }
