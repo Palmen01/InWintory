@@ -49,4 +49,9 @@ export class ApiService {
     const url = `${this.baseUrl}/${id}`;
     return this.http.put<Item>(url, itemData);
   }
+
+  UpdateItem(id: number, item: Item): Observable<Item> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.put<Item>(url, item);
+  }
 }

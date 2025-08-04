@@ -19,6 +19,7 @@ export class ItemViewComponent {
   error: string | null = null;
   isAddItemModalOpen = false;
   isEditItemModalOpen = false;
+  selectedItem: Item | null = null;
 
   constructor(private apiService: ApiService) { }
 
@@ -30,16 +31,25 @@ export class ItemViewComponent {
     this.isAddItemModalOpen = false;
   }
 
-  openEditItemModal() {
+  openEditItemModal(item: Item) {
+    this.selectedItem = item;
     this.isEditItemModalOpen = true;
   }
 
   closeEditItemModal() {
     this.isEditItemModalOpen = false;
+    this.selectedItem = null;
   }
 
   ngOnInit(): void {
     this.loadItems();
+  }
+
+  onItemUpdated(updatedItem: Item) {
+    const index = this.items.findIndex(item => item.id === updatedItem.id);
+    if (index !== -1) {
+      this.items[index] = updatedItem;
+    }
   }
 
   loadItems(): void {
