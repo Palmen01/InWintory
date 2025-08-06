@@ -1,11 +1,16 @@
-<div class="threshold-overlay">
+<div class="">
     <h1>Threshold Reorder</h1>
-    <div class="threshold-tracker" *ngFor="let item of items">
+    <div class="" *ngFor="let item of items">
+        <div>{{ item.id }}</div>
         <div>{{ item.name }}</div>
+        <div>{{ item.quantity }}</div>
+        <div>{{ item.reorderThreshold }}</div>
         
-        <div class="threshold-message">
-            <div class="threshold-action">
-
+        <div class="">
+            <div class="">
+                <button class="">Order</button>
+                <button class="">Dismiss</button>
+                <button class="">Edit Threshold</button>
             </div>
         </div>
     </div>
