@@ -14,7 +14,7 @@ export class ItemThresholdTrackerComponent {
   isLoading = false;
   error: string | null = null;
   items: Item[] = [];
-  
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -41,10 +41,11 @@ export class ItemThresholdTrackerComponent {
   getStockStatus(item: Item): 'good' | 'low' | 'critical' {
     if (item.quantity <= item.reorderThreshold) {
       return 'critical';
-    } else if (item.quantity <= item.reorderThreshold * 1.2) {
+    } else if (item.quantity <= Math.ceil(item.reorderThreshold * 1.2)) {
       return 'low';
     } else {
       return 'good';
     }
   }
+
 }
