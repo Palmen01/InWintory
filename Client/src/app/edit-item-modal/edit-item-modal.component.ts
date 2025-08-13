@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ApiService } from '../service/api.service';
-import { Item } from '../service/api.service';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { ApiService, Item } from '../service/api.service';
 import { NgIf, CurrencyPipe } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 
@@ -10,7 +9,7 @@ import { FormsModule, NgForm } from '@angular/forms';
   templateUrl: './edit-item-modal.component.html',
   styleUrl: './edit-item-modal.component.css'
 })
-export class EditItemModalComponent {
+export class EditItemModalComponent implements OnChanges {
   itemName: string = "";
   itemQuantity: number = 0;
   itemThreshhold: number = 0;
@@ -20,15 +19,25 @@ export class EditItemModalComponent {
   error: string = '';
   
   @Input() isOpen = false;
-  @Input() itemToEdit: Item | null = null; // ← Add this input
+  @Input() itemToEdit: Item | null = null;
   @Output() close = new EventEmitter<void>();
-  @Output() itemUpdated = new EventEmitter<Item>(); // ← Add this output
+  @Output() itemUpdated = new EventEmitter<Item>();
 
   constructor(private apiService: ApiService) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['itemToEdit'] && this.itemToEdit) {
+      this.itemName = this.itemToEdit.name;
+      this.itemQuantity = this.itemToEdit.quantity;
+      this.itemThreshhold = this.itemToEdit.reorderThreshold;
+      this.itemCost = this.itemToEdit.cost;
+    }
+  }
   
   editItem(form: NgForm) {
     this.showErrors = true;
     this.error = '';
+    this.isLoading = true;
 
     if (form.invalid) {
       return;
@@ -39,15 +48,12 @@ export class EditItemModalComponent {
       return;
     }
 
-    this.isLoading = true;
-
-    // Create updated item object
     const updatedItem: Item = {
       id: this.itemToEdit.id,
       name: this.itemName.trim(),
       quantity: this.itemQuantity,
-      unitsSold: this.itemToEdit.unitsSold, // Keep existing values
-      unitsLost: this.itemToEdit.unitsLost, // Keep existing values
+      unitsSold: this.itemToEdit.unitsSold,
+      unitsLost: this.itemToEdit.unitsLost,
       reorderThreshold: this.itemThreshhold,
       cost: this.itemCost,
       restockOrders: undefined
@@ -56,7 +62,7 @@ export class EditItemModalComponent {
     this.apiService.UpdateItem(this.itemToEdit.id, updatedItem).subscribe({
       next: (response) => {
         this.isLoading = false;
-        this.itemUpdated.emit(response); // ← Emit the updated item
+        this.itemUpdated.emit(response);
         this.closeEditItemModal();
       },
       error: (error) => {
@@ -66,7 +72,6 @@ export class EditItemModalComponent {
       }
     });
   }
-
 
   closeEditItemModal() {
     this.close.emit();

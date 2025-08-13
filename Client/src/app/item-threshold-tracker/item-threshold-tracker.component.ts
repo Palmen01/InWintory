@@ -3,7 +3,6 @@ import { Item, ApiService } from '../service/api.service';
 import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-item-threshold-tracker',
   imports: [CommonModule],
@@ -47,5 +46,4 @@ export class ItemThresholdTrackerComponent {
       return 'good';
     }
   }
-
 }
