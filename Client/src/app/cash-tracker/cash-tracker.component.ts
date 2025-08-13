@@ -9,12 +9,17 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class CashTrackerComponent {
   items: Item[] = [];
-  constructor(private apiService: ApiService) { }
-
   totalValue = 0;
+
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.loadItems();
+
+    // Listen for updates from apiService
+    this.apiService.itemsUpdated$.subscribe(() => {
+      this.loadItems();
+    });
   }
 
   loadItems(): void {

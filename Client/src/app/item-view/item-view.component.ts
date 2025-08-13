@@ -83,6 +83,7 @@ export class ItemViewComponent {
     this.apiService.SellItem(item.id, 1).subscribe({
       next: (updatedItem) => {
         item.quantity = updatedItem.quantity;
+        this.apiService.notifyItemsUpdated();
       }
     });
   }
@@ -91,6 +92,7 @@ export class ItemViewComponent {
     this.apiService.OrderItem(item.id, 1).subscribe({
       next: (updatedItem) => {
         item.quantity = updatedItem.quantity
+        this.apiService.notifyItemsUpdated();
       }
     })
   }
@@ -99,6 +101,7 @@ export class ItemViewComponent {
     this.apiService.RemoveItem(item.id).subscribe({
       next: () => {
         this.items = this.items.filter(i => i.id !== item.id);
+        this.apiService.notifyItemsUpdated();
       },
       error: (error) => {
         console.error('Error removing item:', error);

@@ -13,11 +13,13 @@ export interface Item {
   restockOrders: any;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
+
 export class ApiService {
   private baseUrl = 'https://localhost:7128/api/items';
+
+  private itemsUpdatedSource = new BehaviorSubject<void>(undefined);
+  itemsUpdated$ = this.itemsUpdatedSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -53,5 +55,9 @@ export class ApiService {
   UpdateItem(id: number, item: Item): Observable<Item> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.put<Item>(url, item);
+  }
+
+  notifyItemsUpdated() {
+    this.itemsUpdatedSource.next();
   }
 }
