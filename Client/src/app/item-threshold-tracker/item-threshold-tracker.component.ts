@@ -13,6 +13,7 @@ export class ItemThresholdTrackerComponent {
   isLoading = false;
   error: string | null = null;
   items: Item[] = [];
+  isVisible = true;
 
   constructor(private apiService: ApiService) { }
 
@@ -37,13 +38,20 @@ export class ItemThresholdTrackerComponent {
     });
   }
 
-  getStockStatus(item: Item): 'good' | 'low' | 'critical' {
+  getStockStatus(item: Item): 'low' | 'critical' | null {
     if (item.quantity <= item.reorderThreshold) {
       return 'critical';
     } else if (item.quantity <= Math.ceil(item.reorderThreshold * 1.2)) {
       return 'low';
-    } else {
-      return 'good';
     }
+    return null;
+  }
+
+  toggleVisibility(): void {
+    this.isVisible = !this.isVisible;
+  }
+
+  getFilteredItems(): Item[] {
+    return this.items.filter(item => this.getStockStatus(item) !== null);
   }
 }

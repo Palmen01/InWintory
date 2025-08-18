@@ -64,6 +64,7 @@ export class EditItemModalComponent implements OnChanges {
         this.isLoading = false;
         this.itemUpdated.emit(response);
         this.closeEditItemModal();
+        this.apiService.notifyItemsUpdated();
       },
       error: (error) => {
         this.isLoading = false;
