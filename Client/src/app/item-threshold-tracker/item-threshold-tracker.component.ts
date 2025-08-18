@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Item, ApiService } from '../service/api.service';
 import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-item-threshold-tracker',
@@ -9,7 +11,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './item-threshold-tracker.component.html',
   styleUrl: './item-threshold-tracker.component.css'
 })
-export class ItemThresholdTrackerComponent {
+export class ItemThresholdTrackerComponent implements OnDestroy {
+  private subscription: Subscription = new Subscription();
   isLoading = false;
   error: string | null = null;
   items: Item[] = [];
@@ -19,6 +22,7 @@ export class ItemThresholdTrackerComponent {
 
   ngOnInit(): void {
     this.loadItems();
+    this.apiService.itemsUpdated$.subscribe(() => this.loadItems());
   }
 
   loadItems(): void {
@@ -53,5 +57,9 @@ export class ItemThresholdTrackerComponent {
 
   getFilteredItems(): Item[] {
     return this.items.filter(item => this.getStockStatus(item) !== null);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

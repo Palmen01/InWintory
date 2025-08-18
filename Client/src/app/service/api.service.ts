@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export interface Item {
   id: number;
@@ -29,32 +30,57 @@ export class ApiService {
 
   SellItem(id: number, quantity: number): Observable<Item> {
     const url = `${this.baseUrl}/${id}/sell?quantity=${quantity}`;
-    return this.http.put<Item>(url, {});
+    return this.http.put<Item>(url, {}).pipe(
+      tap(() => {
+        // Notify all subscribers that items have been updated
+        this.notifyItemsUpdated();
+      })
+    );
   }
 
   OrderItem(id: number, quantity: number): Observable<Item> {
     const url = `${this.baseUrl}/${id}/restock?quantity=${quantity}`;
-    return this.http.patch<Item>(url, {});
+    return this.http.patch<Item>(url, {}).pipe(
+      tap(() => {
+        this.notifyItemsUpdated();
+      })
+    );
   }
 
   AddItem(name: string, quantity: number, reorderThreshold: number, cost: number): Observable<Item> {
     const body = { name, quantity, reorderThreshold, cost };
-    return this.http.post<Item>(this.baseUrl, body);
+    return this.http.post<Item>(this.baseUrl, body).pipe(
+      tap(() => {
+        this.notifyItemsUpdated();
+      })
+    );
   }
 
   RemoveItem(id: number): Observable<any> {
     const url = `${this.baseUrl}/${id}`;
-    return this.http.delete(url);
+    return this.http.delete(url).pipe(
+      tap(() => {
+        this.notifyItemsUpdated();
+      })
+    );
   }
 
   EditItem(id: number, itemData: Item): Observable<Item> {
     const url = `${this.baseUrl}/${id}`;
-    return this.http.put<Item>(url, itemData);
+    return this.http.put<Item>(url, itemData).pipe(
+      tap(() => {
+        this.notifyItemsUpdated();
+      })
+    );
   }
 
   UpdateItem(id: number, item: Item): Observable<Item> {
     const url = `${this.baseUrl}/${id}`;
-    return this.http.put<Item>(url, item);
+    return this.http.put<Item>(url, item).pipe(
+      tap(() => {
+        this.notifyItemsUpdated();
+      })
+    );
   }
 
   notifyItemsUpdated() {
